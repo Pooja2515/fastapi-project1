@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+
+    <style>
+        * {
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f5fa;
+        }
+
+        header {
+            background-color: #263879;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            font-size: 30px; 
+            margin-bottom: 8px;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 30px 0 40px;
+        }
+
+        .filters a {
+            background-color: white;
+            color: #263879;
+            text-decoration: none;
+            padding: 9px 16px;
+            border: 1px solid #dce1ed;
+            border-radius: 25px;
+            font-size: 12px;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 20px;
+            align-items: stretch;
+            padding-bottom: 30px;
+        }
+
+        .product-card {
+            background-color: white;
+            padding: 14px;
+            border-radius: 13px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 165px;
+            object-fit: contain;
+            background-color: #f7f8fb;
+            border-radius: 8px;
+            padding: 5px;
+        }
+
+        .product-title {
+            color: #111;
+            font-size: 13px;
+            margin: 12px 0 8px;
+            height: 39px;
+            overflow: hidden;
+        }
+
+        .description {
+            font-size: 10px;
+            color: #71809c;
+            line-height: 1.6;
+            height: 48px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #e5e8ef;
+            margin: 0 0 12px;
+        }
+
+        .category {
+            font-size: 10px;
+            color: #71809c;
+            margin-bottom: 8px;
+        }
+
+        .price {
+            color: #263879;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .rating {
+            font-size: 10px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .available,
+        .unavailable {
+            display: inline-block;
+            width: fit-content;
+            font-size: 10px;
+            padding: 6px 11px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+
+        .available {
+            background-color: #d9fbe7;
+            color: #16864b;
+        }
+
+        .unavailable {
+            background-color: #ffe0e0;
+            color: #d33333;
+        }
+
+        .view-button {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: #293f96;
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 11px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Product Management</h1>
+        <p>Explore our products and find what you are looking for</p>
+    </header>
+
+    <main>
+
+        <div class="filters">
+
+            <a href="/products">All Products</a>
+
+            <a href="/products?category=men's clothing">
+                Men's Clothing
+            </a>
+
+            <a href="/products?category=jewelery">
+                Jewellery
+            </a>
+
+            <a href="/products?category=electronics">
+                Electronics
+            </a>
+
+            <a href="/products?category=women's clothing">
+                Women's Clothing
+            </a>
+
+            <a href="/products?sort=low">
+                Price: Low to High
+            </a>
+
+            <a href="/products?sort=high">
+                Price: High to Low
+            </a>
+
+        </div>
+
+        <div class="product-container">
+
+            {% for product in products %}
+
+            <div class="product-card">
+
+                <img
+                    src="{{ product.image }}"
+                    alt="{{ product.title }}"
+                    class="product-image"
+                >
+
+                <h3 class="product-title">
+                    {{ product.title }}
+                </h3>
+
+                <p class="description">
+                    {{ product.description }}
+                </p>
+
+                <hr>
+
+                <p class="category">
+                    Category: {{ product.category }}
+                </p>
+
+                <h3 class="price">
+                    ₹ {{ product.price }}
+                </h3>
+
+                <p class="rating">
+                    Rating: {{ product.rating.rate }} 
+                    ({{ product.rating.count }} reviews)
+                </p>
+
+                {% if product.in_stock %}
+
+                    <span class="available">
+                        ✓ Available
+                    </span>
+
+                {% else %}
+
+                    <span class="unavailable">
+                        ✕ Not Available
+                    </span>
+
+                {% endif %}
+
+                <a href="#" class="view-button">
+                    View Product →
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </main>
+
+</body>
+</html>
